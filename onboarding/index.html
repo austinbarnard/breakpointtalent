@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Onboarding · BreakPoint Talent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:       #4a7c59;
+      --green-dark:  #2e4d38;
+      --green-light: #edf2ee;
+      --charcoal:    #333d35;
+      --text:        #1c231d;
+      --muted:       #6b7a6d;
+      --border:      #ccd5ce;
+      --bg:          #f4f2ee;
+      --white:       #ffffff;
+      --radius:      6px;
+    }
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 80px;
+    }
+    .logo-wrap { margin-bottom: 28px; }
+    .logo-wrap img { height: 140px; }
+    h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 36px; font-weight: 400;
+      color: var(--charcoal); margin-bottom: 6px;
+      text-align: center; letter-spacing: 0.01em;
+    }
+    .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 32px; text-align: center; }
+    /* Stepper */
+    .stepper { display: flex; align-items: center; margin-bottom: 36px; }
+    .step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .step.active { color: var(--green-dark); }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: var(--muted); background: var(--white);
+    }
+    .step.active .step-num { background: var(--green); border-color: var(--green); color: var(--white); }
+    .step-line { width: 56px; height: 1px; background: var(--border); margin: 0 12px; }
+    /* Card */
+    .card {
+      background: var(--white); border-radius: 10px;
+      padding: 40px 44px; width: 100%; max-width: 560px;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.07);
+    }
+    .card-title { font-family: "Cormorant Garamond", serif; font-size: 26px; font-weight: 400; margin-bottom: 4px; }
+    .card-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+    /* Form */
+    .field { margin-bottom: 18px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label {
+      display: block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--charcoal); margin-bottom: 6px;
+    }
+    label .req { color: var(--green); margin-left: 1px; }
+    input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%; padding: 10px 13px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-family: "DM Sans", sans-serif; font-size: 14px;
+      color: var(--text); background: var(--white);
+      transition: border-color .15s, box-shadow .15s; outline: none;
+    }
+    input::placeholder { color: #b8c0ba; }
+    input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(74,124,89,.12); }
+    input.error { border-color: #b83232; }
+    .err-msg { font-size: 11px; color: #b83232; margin-top: 4px; display: none; }
+    input.error + .err-msg { display: block; }
+    .section-divider {
+      display: flex; align-items: center; gap: 12px; margin: 26px 0 18px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+    .section-divider span {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); white-space: nowrap;
+    }
+    .btn-row { display: flex; justify-content: flex-end; margin-top: 30px; }
+    button[type="submit"], #submitBtn {
+      background: var(--green-dark); color: var(--white);
+      font-family: "DM Sans", sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 13px 30px; border: none; border-radius: var(--radius);
+      cursor: pointer; transition: background .15s, transform .1s;
+    }
+    button[type="submit"]:hover, #submitBtn:hover { background: #1e3327; }
+    button[type="submit"]:active, #submitBtn:active { transform: scale(0.98); }
+    /* Page 2 */
+    #page2 { display: none; }
+    .billing-note {
+      background: var(--green-light); border-left: 3px solid var(--green);
+      border-radius: 4px; padding: 12px 16px; font-size: 13px;
+      color: var(--green-dark); margin-bottom: 22px; line-height: 1.5;
+    }
+    .payment-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .payment-opt {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--radius); cursor: pointer;
+      transition: border-color .15s; font-size: 14px;
+    }
+    .payment-opt:has(input:checked) { border-color: var(--green); background: var(--green-light); }
+    .payment-opt input[type="radio"] { accent-color: var(--green); }
+    .agreement {
+      margin-top: 22px; padding: 14px 16px; background: var(--bg);
+      border-radius: var(--radius); font-size: 12px; color: var(--muted);
+      line-height: 1.7; max-height: 110px; overflow-y: auto;
+      border: 1px solid var(--border);
+    }
+    .agree-check {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-top: 14px; font-size: 13px; cursor: pointer;
+    }
+    .agree-check input { accent-color: var(--green); margin-top: 2px; flex-shrink: 0; }
+    .btn-back {
+      background: none; border: 1.5px solid var(--border); color: var(--muted);
+      font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 13px 22px;
+      border-radius: var(--radius); cursor: pointer; transition: border-color .15s, color .15s;
+    }
+    .btn-back:hover { border-color: var(--green); color: var(--green); }
+    .btn-row.two { justify-content: space-between; }
+    /* Success */
+    #page-success { display: none; text-align: center; }
+    .success-icon {
+      width: 60px; height: 60px; background: var(--green-light);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 18px;
+    }
+    .success-icon svg { width: 28px; height: 28px; stroke: var(--green); }
+    #page-success h2 { font-family: "Cormorant Garamond", serif; font-size: 28px; font-weight: 400; margin-bottom: 10px; }
+    #page-success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    footer { margin-top: 36px; font-size: 12px; color: var(--muted); text-align: center; }
+    @media (max-width: 520px) {
+      .card { padding: 26px 20px; }
+      .row { grid-template-columns: 1fr; }
+      .step-line { width: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <img src="/logo.png" alt="BreakPoint Talent" />
+  </div>
+
+  <h1>Client Onboarding</h1>
+  <p class="subtitle">Just a few quick details to get your account set up.</p>
+
+  <div class="stepper" id="stepper">
+    <div class="step active" id="step1"><div class="step-num">1</div>Your Info</div>
+    <div class="step-line"></div>
+    <div class="step" id="step2"><div class="step-num">2</div>Billing &amp; Agreement</div>
+  </div>
+
+  <div class="card">
+
+    <!-- PAGE 1 -->
+    <div id="page1">
+      <div class="card-title">Company &amp; Contact</div>
+      <div class="card-sub">Tell us who you are and how to reach you.</div>
+      <form id="form1" novalidate>
+        <div class="field">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" name="company_name" placeholder="Acme Corp" required />
+          <div class="err-msg">Required</div>
+        </div>
+        <div class="field">
+          <label>Business Address <span class="req">*</span></label>
+          <input type="text" name="business_address" placeholder="123 Main St, Suite 400, Cleveland, OH 44114" required />
+          <div class="err-msg">Required</div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" name="first_name" placeholder="Jane" required />
+            <div class="err-msg">Required</div>
+          </div>
+          <div class="field">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" name="last_name" placeholder="Smith" required />
+            <div class="err-msg">Required</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Title <span class="req">*</span></label>
+            <input type="text" name="title" placeholder="CFO" required />
+            <div class="err-msg">Required</div>
+          </div>
+          <div class="field">
+            <label>Phone <span class="req">*</span></label>
+            <input type="tel" name="phone" placeholder="(216) 555-0100" required />
+            <div class="err-msg">Required</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" placeholder="jane@example.com" required />
+          <div class="err-msg">Enter a valid email</div>
+        </div>
+        <div class="section-divider"><span>Accounts Payable</span></div>
+        <div class="row">
+          <div class="field">
+            <label>AP Name</label>
+            <input type="text" name="ap_name" placeholder="John Doe" />
+          </div>
+          <div class="field">
+            <label>AP Email</label>
+            <input type="email" name="ap_email" placeholder="ap@example.com" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit">Continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2">
+      <div class="card-title">Billing &amp; Agreement</div>
+      <div class="card-sub">How you'd like to receive and pay invoices.</div>
+      <div class="billing-note">
+        BreakPoint Talent invoices on a <strong>net-30 basis</strong> upon placement. Please confirm your preferred payment method below.
+      </div>
+      <label style="margin-bottom:10px;">Preferred Payment Method <span class="req">*</span></label>
+      <div class="payment-opts">
+        <label class="payment-opt"><input type="radio" name="payment_method" value="ach" checked />ACH / Direct Transfer</label>
+        <label class="payment-opt"><input type="radio" name="payment_method" value="check" />Check</label>
+        <label class="payment-opt"><input type="radio" name="payment_method" value="wire" />Wire Transfer</label>
+        <label class="payment-opt"><input type="radio" name="payment_method" value="credit" />Credit Card (3% processing fee)</label>
+      </div>
+      <div class="field">
+        <label>PO Number <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:var(--muted)">(if required)</span></label>
+        <input type="text" name="po_number" placeholder="PO-2025-001" />
+      </div>
+      <div class="agreement">
+        By submitting this form, you acknowledge that BreakPoint Talent's standard staffing terms apply to all placements. Payment is due within 30 days of invoice. A 1.5% monthly late fee applies to past-due balances. Placement fees are non-refundable after the guarantee period. For a full copy of our client agreement, contact your BreakPoint Talent representative.
+      </div>
+      <label class="agree-check" id="agree-label">
+        <input type="checkbox" id="agree" />
+        I have read and agree to BreakPoint Talent's client terms.
+      </label>
+      <div class="btn-row two">
+        <button type="button" class="btn-back" id="backBtn">← Back</button>
+        <button type="button" id="submitBtn">Submit</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div id="page-success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2>You're all set!</h2>
+      <p>Thanks for completing onboarding.<br>Your BreakPoint Talent representative will be in touch shortly.</p>
+    </div>
+
+  </div>
+
+  <footer>© 2026 BreakPoint Talent · Confidential</footer>
+
+  <script>
+    const formData = {};
+    document.getElementById("form1").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let valid = true;
+      this.querySelectorAll("[required]").forEach(input => {
+        const empty = !input.value.trim();
+        const badEmail = input.type === "email" && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+        if (empty || badEmail) { input.classList.add("error"); valid = false; }
+        else { input.classList.remove("error"); }
+      });
+      if (!valid) return;
+      new FormData(this).forEach((v, k) => formData[k] = v);
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "block";
+      document.getElementById("step1").classList.remove("active");
+      document.getElementById("step2").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    document.querySelectorAll("input").forEach(inp => {
+      inp.addEventListener("input", () => inp.classList.remove("error"));
+    });
+    document.getElementById("backBtn").addEventListener("click", () => {
+      document.getElementById("page2").style.display = "none";
+      document.getElementById("page1").style.display = "block";
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step1").classList.add("active");
+    });
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      if (!document.getElementById("agree").checked) {
+        document.getElementById("agree-label").style.color = "#b83232"; return;
+      }
+      document.querySelectorAll("#page2 input").forEach(inp => {
+        if (inp.name) formData[inp.name] = inp.value;
+      });
+      formData.payment_method = document.querySelector("input[name=payment_method]:checked")?.value;
+      console.log("Submission:", formData);
+      document.getElementById("page2").style.display = "none";
+      document.getElementById("stepper").style.display = "none";
+      document.getElementById("page-success").style.display = "block";
+    });
+  </script>
+</body>
+</html>
