@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions · BreakPoint Talent</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/bp-favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/bp-favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/bp-apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/bp-favicon-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/bp-favicon-512x512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --black:    #2A2A2A;
+  --white:    #FFFFFF;
+  --offwhite: #F7F7F4;
+  --gray-1:   #3D3D3D;
+  --gray-2:   #666666;
+  --gray-3:   #999999;
+  --gray-4:   #E0E0DC;
+  --green:    #5A9642;
+  --green-dk: #3F7030;
+  --green-lt: #EAF4E4;
+  --border:   rgba(0,0,0,0.08);
+}
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ── NAV ─────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4rem;
+  height: 72px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nav-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.nav-wordmark .brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--black);
+  letter-spacing: -0.01em;
+}
+.nav-wordmark .sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  margin-top: 2px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-cta {
+  background: var(--green) !important;
+  color: #fff !important;
+  padding: 0.55rem 1.4rem !important;
+  border-radius: 3px;
+}
+.nav-cta:hover { background: var(--green-dk) !important; }
+
+/* ── PAGE HEADER ─────────────────────────────────── */
+.page-header {
+  padding: 10rem 4rem 5rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  max-width: 860px;
+}
+.page-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.page-eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1.5px;
+  background: var(--green);
+}
+.page-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+.page-h1 em { font-style: italic; color: var(--green); }
+.page-meta {
+  font-size: 0.82rem;
+  color: var(--gray-3);
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+}
+
+/* ── CONTENT ─────────────────────────────────────── */
+.page-content {
+  max-width: 860px;
+  padding: 5rem 4rem 8rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.75rem;
+  margin-top: 3.5rem;
+}
+.section-label::before {
+  content: '';
+  width: 22px;
+  height: 1.5px;
+  background: var(--green);
+}
+.section-label:first-child { margin-top: 0; }
+
+p {
+  font-size: 0.97rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--gray-2);
+  margin-bottom: 1rem;
+}
+p strong { color: var(--black); font-weight: 500; }
+p em { font-style: italic; }
+
+ol {
+  padding-left: 1.4rem;
+  margin-bottom: 1rem;
+}
+ol li {
+  font-size: 0.97rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--gray-2);
+  margin-bottom: 0.6rem;
+}
+
+/* SMS callout box */
+.sms-callout {
+  background: var(--green-lt);
+  border-left: 3px solid var(--green);
+  padding: 1.8rem 2rem;
+  margin: 1.5rem 0 1rem;
+  border-radius: 0 3px 3px 0;
+}
+.sms-callout p {
+  margin-bottom: 0.6rem;
+  font-size: 0.92rem;
+}
+.sms-callout p:last-child { margin-bottom: 0; }
+
+a { color: var(--green); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--green-dk); text-decoration: underline; }
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(90,150,66,0.25);
+  padding: 2.5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.footer-wordmark {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: -0.01em;
+}
+.footer-wordmark span { color: var(--green); }
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--green); }
+.footer-copy {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .page-header, .page-content { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .page-header { padding-top: 7rem; }
+  footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="32" r="19" fill="#2A2A2A"/>
+      <ellipse cx="38" cy="70" rx="24" ry="17" fill="#2A2A2A"/>
+      <circle cx="63" cy="37" r="15" fill="#5A9642"/>
+      <ellipse cx="62" cy="72" rx="20" ry="15" fill="#5A9642"/>
+    </svg>
+    <div class="nav-wordmark">
+      <span class="brand">BreakPoint</span>
+      <span class="sub">Talent</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#industries">Expertise</a></li>
+    <li><a href="/#contact">Open Roles</a></li>
+    <li><a href="/#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="page-eyebrow">Legal</p>
+  <h1 class="page-h1">Terms &amp; <em>Conditions</em></h1>
+  <p class="page-meta">Kraig Talent LLC &nbsp;·&nbsp; Effective Date: June 1, 2025 &nbsp;·&nbsp; Last Updated: June 1, 2025</p>
+</div>
+
+<!-- CONTENT -->
+<div class="page-content">
+
+  <p>These Terms &amp; Conditions govern your use of the BreakPoint Talent website at <a href="https://breakpointtalent.com">breakpointtalent.com</a> and any communications or services provided by Kraig Talent LLC ("we," "us," or "our"). By accessing this site or submitting your information, you agree to these terms.</p>
+
+  <p class="section-label">1. Use of the Website</p>
+  <p>This website is provided for informational purposes related to talent recruitment and placement services. You agree not to use this site for any unlawful purpose or in any way that could damage, disable, or impair its operation.</p>
+
+  <p class="section-label">2. SMS Messaging Program</p>
+  <div class="sms-callout">
+    <p><strong>Program:</strong> BreakPoint Talent / Kraig Talent LLC — Recruitment SMS Communications</p>
+    <p><strong>Description:</strong> By opting in via our contact form, you authorize Kraig Talent LLC to send you SMS text messages related to recruitment updates, interview scheduling, candidate opportunities, and talent placement services.</p>
+    <p><strong>Message frequency:</strong> Message frequency varies based on recruitment activity and your engagement with our services.</p>
+    <p><strong>Rates:</strong> Message and data rates may apply. Contact your wireless provider for details on your plan.</p>
+    <p><strong>To cancel:</strong> Reply <strong>STOP</strong> to any SMS message at any time. You will receive one confirmation message: <em>"Kraig Talent LLC: You have been successfully unsubscribed. You will not receive any more messages from this number."</em> No further messages will be sent.</p>
+    <p><strong>For help:</strong> Reply <strong>HELP</strong> to any SMS message, or contact us at <a href="mailto:hello@breakpointtalent.com">hello@breakpointtalent.com</a>.</p>
+    <p>Carriers are not liable for delayed or undelivered messages. For privacy details, see our <a href="/smsprivacy/">Privacy Policy</a>.</p>
+  </div>
+
+  <p class="section-label">3. Opt-In and Consent</p>
+  <p>SMS consent is always optional. Providing a phone number and checking the SMS consent box on our contact form constitutes your express written consent to receive text messages from Kraig Talent LLC. Consent is never a condition of purchase or service. Each opt-in is specific to the communication type described at the time of consent.</p>
+
+  <p class="section-label">4. Intellectual Property</p>
+  <p>All content on this website — including text, branding, and design — is the property of Kraig Talent LLC and may not be reproduced without written permission.</p>
+
+  <p class="section-label">5. Disclaimer of Warranties</p>
+  <p>This website and its content are provided "as is" without warranty of any kind. We do not guarantee employment outcomes or placement results. Kraig Talent LLC makes no representations regarding the completeness or accuracy of information on this site.</p>
+
+  <p class="section-label">6. Limitation of Liability</p>
+  <p>To the maximum extent permitted by law, Kraig Talent LLC shall not be liable for any indirect, incidental, or consequential damages arising from your use of this website or our services.</p>
+
+  <p class="section-label">7. Governing Law</p>
+  <p>These Terms are governed by the laws of the State of Ohio, without regard to conflict of law provisions.</p>
+
+  <p class="section-label">8. Changes to These Terms</p>
+  <p>We may update these Terms at any time. Continued use of this website following a revision constitutes acceptance. The effective date at the top of this page reflects the most recent update.</p>
+
+  <p class="section-label">9. Contact</p>
+  <p>
+    Kraig Talent LLC / BreakPoint Talent<br>
+    Cleveland, Ohio<br>
+    <a href="mailto:hello@breakpointtalent.com">hello@breakpointtalent.com</a><br>
+    <a href="https://breakpointtalent.com">breakpointtalent.com</a>
+  </p>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">
+    <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+      <circle cx="40" cy="32" r="19" fill="rgba(255,255,255,0.3)"/>
+      <ellipse cx="38" cy="70" rx="24" ry="17" fill="rgba(255,255,255,0.3)"/>
+      <circle cx="63" cy="37" r="15" fill="#5A9642"/>
+      <ellipse cx="62" cy="72" rx="20" ry="15" fill="#5A9642"/>
+    </svg>
+    <span class="footer-wordmark">BreakPoint<span> Talent</span></span>
+  </a>
+  <ul class="footer-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#industries">Expertise</a></li>
+    <li><a href="/#contact">Contact</a></li>
+    <li><a href="/smsprivacy/">Privacy Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BreakPoint Talent · Kraig Talent LLC. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
