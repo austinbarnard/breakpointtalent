@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -573,6 +572,44 @@ nav {
 }
 .form-group select option { background: var(--white); }
 .form-group textarea { resize: vertical; min-height: 120px; }
+/* ── CONSENT CHECKBOXES ───────────────────────────── */
+.consent-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 4px 0 8px;
+}
+.consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+.consent-label input[type="checkbox"] {
+  margin-top: 3px;
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.consent-label span {
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: var(--gray-2);
+  font-weight: 300;
+}
+.consent-label span a {
+  color: var(--green);
+  text-decoration: underline;
+}
+.consent-label span a:hover { color: var(--green-dk); }
+.consent-required-note {
+  font-size: 0.7rem;
+  color: var(--gray-3);
+  margin-left: 2px;
+}
+/* ── SUBMIT BUTTON ────────────────────────────────── */
 .form-submit {
   background: var(--green);
   color: #fff;
@@ -906,10 +943,18 @@ footer {
         <input type="text" id="lname" name="last-name" placeholder="Smith" required />
       </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number <span style="font-weight:300;text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" />
+      </div>
     </div>
+
     <div class="form-group">
       <label for="company">Company / Organization</label>
       <input type="text" id="company" name="company" placeholder="Acme Corp" />
@@ -940,6 +985,25 @@ footer {
       <label for="message">Tell Us More</label>
       <textarea id="message" name="message" placeholder="Briefly describe what you're looking for…"></textarea>
     </div>
+
+    <!-- ── A2P COMPLIANCE CHECKBOXES ── -->
+    <div class="consent-block">
+
+      <!-- SMS consent: optional, never pre-checked, form submits without it -->
+      <label class="consent-label">
+        <input type="checkbox" name="sms-consent" value="yes" />
+        <span>I consent to receive SMS messages from <strong>Kraig Talent LLC</strong> related to recruitment updates, interview scheduling, and talent opportunities. Message frequency may vary. Message and data rates may apply. Consent is not a condition of purchase or service. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for help.</span>
+      </label>
+
+      <!-- Privacy + Terms: required for submission -->
+      <label class="consent-label">
+        <input type="checkbox" name="terms-consent" value="yes" required />
+        <span>I accept the <a href="/smsprivacy/" target="_blank">Privacy Policy</a> and <a href="/terms/" target="_blank">Terms &amp; Conditions</a>.<span class="consent-required-note"> (Required)</span></span>
+      </label>
+
+    </div>
+    <!-- ── END COMPLIANCE CHECKBOXES ── -->
+
     <button type="submit" class="form-submit">Send Message</button>
   </form>
 </section>
@@ -959,7 +1023,8 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#industries">Expertise</a></li>
     <li><a href="#contact">Contact</a></li>
-        <li><a href="/smsprivacy">Privacy Policy</a></li>
+    <li><a href="/smsprivacy/">Privacy Policy</a></li>
+    <li><a href="/terms/">Terms &amp; Conditions</a></li>
   </ul>
   <p class="footer-copy">© 2026 BreakPoint Talent · Kraig Talent LLC. All rights reserved.</p>
 </footer>
@@ -981,10 +1046,8 @@ footer {
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('.form-submit');
-
     btn.textContent = 'Sending…';
     btn.disabled = true;
-
     try {
       await fetch('/', {
         method: 'POST',
