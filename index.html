@@ -111,21 +111,14 @@ nav {
   padding: 9rem 4rem 6rem;
   position: relative;
   overflow: hidden;
-  background: var(--white);
+  background: #f7f3ec;
 }
 .hero-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 55% 60% at 85% 50%, rgba(90,150,66,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(90,150,66,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(90,150,66,0.05) 1px, transparent 1px);
-  background-size: 80px 80px;
+  background:
+    radial-gradient(ellipse 60% 65% at 90% 5%, rgba(90,150,66,0.28) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 10% 95%, rgba(90,150,66,0.18) 0%, transparent 45%);
   pointer-events: none;
 }
 .hero-watermark {
@@ -149,12 +142,6 @@ nav {
   text-transform: uppercase;
   color: var(--green);
   margin-bottom: 1.5rem;
-}
-.eyebrow::before {
-  content: '';
-  width: 28px;
-  height: 1.5px;
-  background: var(--green);
 }
 .hero-h1 {
   font-family: 'Playfair Display', serif;
@@ -721,7 +708,6 @@ footer {
 <!-- HERO -->
 <section id="hero">
   <div class="hero-glow"></div>
-  <div class="hero-grid"></div>
   <svg class="hero-watermark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="40" cy="32" r="19" fill="#2A2A2A"/>
     <ellipse cx="38" cy="70" rx="24" ry="17" fill="#2A2A2A"/>
