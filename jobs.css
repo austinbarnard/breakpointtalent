@@ -87,7 +87,6 @@ a { color: inherit; }
   letter-spacing: .2em;
   text-transform: uppercase;
 }
-.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--green); }
 h1, h2, h3 { font-family: "Playfair Display", serif; font-weight: 500; }
 h1 { max-width: 850px; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.08; letter-spacing: -.02em; }
 .hero-copy { max-width: 650px; margin-top: 1.25rem; color: var(--gray-2); font-size: 1.02rem; font-weight: 300; line-height: 1.8; }

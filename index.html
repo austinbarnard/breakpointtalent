@@ -102,6 +102,7 @@ nav {
   background: var(--green-dk) !important;
   color: #fff !important;
 }
+.mobile-open-roles { display: none; }
 /* ── HERO ────────────────────────────────────────── */
 #hero {
   min-height: 100vh;
@@ -660,6 +661,24 @@ footer {
 @media (max-width: 900px) {
   nav { padding: 0 1.5rem; }
   .nav-links { display: none; }
+  .mobile-open-roles {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 42px;
+    background: var(--green);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
   #hero, #about, #industries { padding: 5rem 1.5rem; }
   #mission { padding: 4rem 1.5rem; }
   .industries-grid { grid-template-columns: 1fr; }
@@ -703,6 +722,7 @@ footer {
     <li><a href="/jobs/">Open Roles</a></li>
     <li><a href="#contact" class="nav-cta">Contact Us</a></li>
   </ul>
+  <a class="mobile-open-roles" href="/jobs/">View Our Open Positions <span aria-hidden="true">→</span></a>
 </nav>
 
 <!-- HERO -->
@@ -817,9 +837,11 @@ footer {
       <div class="role-tags">
         <span class="role-tag">CFO</span>
         <span class="role-tag">Controller</span>
-        <span class="role-tag">FP&amp;A</span>
-        <span class="role-tag">Senior Accountant</span>
+        <span class="role-tag">VP of Finance</span>
+        <span class="role-tag">FP&amp;A Manager</span>
         <span class="role-tag">Finance Director</span>
+        <span class="role-tag">Accounting Manager</span>
+        <span class="role-tag">Senior Accountant</span>
       </div>
     </div>
     <div class="industry-card fade-up">
@@ -827,10 +849,14 @@ footer {
       <h3>Public Accounting</h3>
       <p>Deep relationships with public accounting firms and professionals at every level, from associates to partners.</p>
       <div class="role-tags">
-        <span class="role-tag">Audit Manager</span>
+        <span class="role-tag">Tax Partner</span>
+        <span class="role-tag">Tax Manager</span>
+        <span class="role-tag">Tax Supervisor</span>
         <span class="role-tag">Tax Senior</span>
-        <span class="role-tag">Assurance</span>
-        <span class="role-tag">CPA Firms</span>
+        <span class="role-tag">Audit Partner</span>
+        <span class="role-tag">Audit Manager</span>
+        <span class="role-tag">Audit Senior</span>
+        <span class="role-tag">Assurance Manager</span>
       </div>
     </div>
     <div class="industry-card fade-up">
@@ -839,9 +865,11 @@ footer {
       <p>Placing attorneys, paralegals, legal ops professionals, and in-house counsel with law firms and corporate legal departments.</p>
       <div class="role-tags">
         <span class="role-tag">General Counsel</span>
+        <span class="role-tag">Corporate Counsel</span>
         <span class="role-tag">Associate Attorney</span>
         <span class="role-tag">Paralegal</span>
-        <span class="role-tag">Compliance</span>
+        <span class="role-tag">Legal Operations</span>
+        <span class="role-tag">Compliance Counsel</span>
       </div>
     </div>
     <div class="industry-card fade-up">
@@ -850,9 +878,11 @@ footer {
       <p>Engineering, data, product, and IT roles across industries. We connect technical talent with companies that value what they build.</p>
       <div class="role-tags">
         <span class="role-tag">Software Engineer</span>
-        <span class="role-tag">Data Analyst</span>
-        <span class="role-tag">IT Manager</span>
-        <span class="role-tag">DevOps</span>
+        <span class="role-tag">Engineering Manager</span>
+        <span class="role-tag">Data Engineer</span>
+        <span class="role-tag">Product Manager</span>
+        <span class="role-tag">IT Director</span>
+        <span class="role-tag">DevOps Engineer</span>
       </div>
     </div>
     <div class="industry-card fade-up">
@@ -862,8 +892,10 @@ footer {
       <div class="role-tags">
         <span class="role-tag">Plant Manager</span>
         <span class="role-tag">Operations Director</span>
-        <span class="role-tag">Procurement</span>
-        <span class="role-tag">Logistics</span>
+        <span class="role-tag">Manufacturing Engineer</span>
+        <span class="role-tag">Supply Chain Manager</span>
+        <span class="role-tag">Procurement Manager</span>
+        <span class="role-tag">Logistics Manager</span>
       </div>
     </div>
     <div class="industry-card fade-up">
@@ -871,10 +903,12 @@ footer {
       <h3>HR &amp; Operations</h3>
       <p>People operations, HR leadership, and operational roles for growing organizations building strong internal teams.</p>
       <div class="role-tags">
+        <span class="role-tag">CHRO</span>
         <span class="role-tag">HR Director</span>
-        <span class="role-tag">People Ops</span>
-        <span class="role-tag">COO</span>
-        <span class="role-tag">TA Director</span>
+        <span class="role-tag">HR Business Partner</span>
+        <span class="role-tag">People Operations</span>
+        <span class="role-tag">Talent Acquisition</span>
+        <span class="role-tag">Chief Operating Officer</span>
       </div>
     </div>
   </div>
