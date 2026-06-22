@@ -50,9 +50,59 @@ function safeJson(value) {
 function plainText(value = "") {
   return String(value)
     .replace(/```[\s\S]*?```/g, " ")
-    .replace(/[#>*_`\[\]()~-]/g, " ")
+    .replace(/^\s*[-+]\s+/gm, " ")
+    .replace(/[#>*_`\[\]()~]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function sectionBody(markdown = "", heading) {
+  const lines = String(markdown).split("\n");
+  const target = heading.trim().toLowerCase();
+  const body = [];
+  let collecting = false;
+  for (const line of lines) {
+    const match = line.match(/^##\s+(.+?)\s*$/);
+    if (match) {
+      if (collecting) break;
+      collecting = match[1].trim().toLowerCase() === target;
+      continue;
+    }
+    if (collecting) body.push(line);
+  }
+  return body.join("\n").trim();
+}
+
+function truncate(value, max = 220) {
+  if (value.length <= max) return value;
+  const clipped = value.slice(0, max + 1);
+  const boundary = clipped.lastIndexOf(" ");
+  return `${clipped.slice(0, boundary > max * .65 ? boundary : max).trim()}…`;
+}
+
+function jobSummary(job) {
+  const about = sectionBody(job.description, "A Bit About Us");
+  const firstParagraph = about.split(/\n\s*\n/).find((part) => plainText(part));
+  return truncate(plainText(firstParagraph || job.description), 230);
+}
+
+function jobHighlights(job) {
+  const preferred = sectionBody(job.description, "Why Join Us");
+  const source = preferred || job.description || "";
+  return source
+    .split("\n")
+    .map((line) => line.match(/^\s*[-*+]\s+(.+)$/)?.[1])
+    .filter(Boolean)
+    .map((line) => truncate(plainText(line), 105))
+    .slice(0, 3);
+}
+
+function workplaceLabel(job) {
+  if (job.workplaceType) return job.workplaceType;
+  const copy = plainText(job.description).toLowerCase();
+  if (/\bhybrid\b/.test(copy)) return "Hybrid";
+  if (/\bfully remote\b|\b100% remote\b|\bwork remotely\b/.test(copy)) return "Remote";
+  return "On-site";
 }
 
 function markdownHtml(value) {
@@ -167,15 +217,24 @@ function renderJobsIndex(jobs) {
   const cards = jobs.map((job) => {
     const location = locationLabel(job);
     const salary = salaryLabel(job.salary);
-    const search = [job.title, location, job.employmentType, salary].filter(Boolean).join(" ").toLowerCase();
+    const workplace = workplaceLabel(job);
+    const summary = jobSummary(job);
+    const highlights = jobHighlights(job);
+    const search = [job.title, location, job.employmentType, workplace, salary, summary, ...highlights].filter(Boolean).join(" ").toLowerCase();
     return `<a class="job-card" href="/jobs/${escapeHtml(job.slug)}/" data-job-card data-search="${escapeHtml(search)}">
-      <h2>${escapeHtml(job.title)}</h2>
-      <div class="job-meta">
-        <span class="meta-pill">${escapeHtml(location)}</span>
-        ${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}
-        ${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}
+      <div class="job-card-main">
+        <p class="card-eyebrow">Open opportunity</p>
+        <h2>${escapeHtml(job.title)}</h2>
+        <div class="job-meta">
+          <span class="meta-pill">${escapeHtml(location)}</span>
+          <span class="meta-pill">${escapeHtml(workplace)}</span>
+          ${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}
+          ${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}
+        </div>
+        ${summary ? `<p class="job-summary">${escapeHtml(summary)}</p>` : ""}
+        <span class="view-role">View role <span aria-hidden="true">→</span></span>
       </div>
-      <span class="view-role">View role →</span>
+      ${highlights.length ? `<div class="job-highlights"><p>Why this role stands out</p><ul>${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>` : ""}
     </a>`;
   }).join("\n");
   const description = "Explore current opportunities represented by BreakPoint Talent and apply directly online.";
@@ -198,6 +257,7 @@ function renderJobPage(job) {
   const canonical = `${siteUrl}/jobs/${job.slug}/`;
   const location = locationLabel(job);
   const salary = salaryLabel(job.salary);
+  const workplace = workplaceLabel(job);
   const descriptionHtml = markdownHtml(job.description);
   const metaDescription = job.description
     ? `${plainText(job.description).slice(0, 135)}${plainText(job.description).length > 135 ? "…" : ""}`
@@ -211,7 +271,13 @@ function renderJobPage(job) {
     identifier: { "@type": "PropertyValue", name: "BreakPoint Talent", value: job.id },
     datePosted: job.datePosted.slice(0, 10),
     directApply: true,
-    hiringOrganization: { "@type": "Organization", name: "confidential" },
+    hiringOrganization: {
+      "@type": "Organization",
+      name: "BreakPoint Talent",
+      legalName: "Kraig Talent LLC",
+      sameAs: siteUrl,
+      logo: `${siteUrl}/bp-favicon-512x512.png`,
+    },
     jobLocation: {
       "@type": "Place",
       address: {
@@ -226,6 +292,10 @@ function renderJobPage(job) {
     baseSalary: salarySchema(job.salary),
     url: canonical,
   } : null;
+  if (jsonLd && job.workplaceType === "Remote") {
+    jsonLd.jobLocationType = "TELECOMMUTE";
+    jsonLd.applicantLocationRequirements = { "@type": "Country", name: "USA" };
+  }
   if (jsonLd) {
     for (const key of Object.keys(jsonLd)) if (jsonLd[key] === undefined) delete jsonLd[key];
     if (jsonLd.jobLocation?.address) {
@@ -236,7 +306,7 @@ function renderJobPage(job) {
   }
   return `${head({ title: `${job.title} in ${location} | BreakPoint Talent`, description: metaDescription, canonical, jsonLd })}
 <body>${nav()}
-<header class="page-hero"><div class="hero-inner"><a class="breadcrumb" href="/jobs/">← All open roles</a><p class="eyebrow">Open Role</p><h1>${escapeHtml(job.title)}</h1><div class="detail-meta"><span class="meta-pill">${escapeHtml(location)}</span>${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}</div></div></header>
+<header class="page-hero detail-hero"><div class="hero-inner"><a class="breadcrumb" href="/jobs/">← All open roles</a><p class="eyebrow">Open Role</p><h1>${escapeHtml(job.title)}</h1><div class="detail-meta"><span class="meta-pill">${escapeHtml(location)}</span><span class="meta-pill">${escapeHtml(workplace)}</span>${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}</div></div></header>
 <main class="content-wrap detail-grid">
   <article class="job-description">
     ${descriptionHtml || `<h2>About this opportunity</h2><p>Contact BreakPoint Talent for full role details. This active search is not yet eligible for Google’s enhanced job results because its complete job description has not been added in Ace.</p>`}
