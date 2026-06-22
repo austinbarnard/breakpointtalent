@@ -75,14 +75,6 @@ a { color: inherit; }
   position: relative;
   overflow: hidden;
 }
-.page-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(90, 150, 66, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(90, 150, 66, .04) 1px, transparent 1px);
-  background-size: 80px 80px;
-  pointer-events: none;
-}
 .hero-inner, .content-wrap { width: min(1120px, 100%); margin: 0 auto; position: relative; z-index: 1; }
 .eyebrow {
   display: flex;
