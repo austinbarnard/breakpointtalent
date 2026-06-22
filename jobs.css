@@ -143,6 +143,24 @@ h1 { max-width: 850px; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.08;
 .empty-state { padding: 3rem; text-align: center; background: var(--white); border: 1px solid var(--gray-4); color: var(--gray-2); }
 .breadcrumb { margin-bottom: 1.2rem; color: var(--green); font-size: .8rem; font-weight: 600; text-decoration: none; }
 .detail-meta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+.share-job-button {
+  margin-top: 1.3rem;
+  padding: .62rem .9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  border: 1px solid rgba(90, 150, 66, .45);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .62);
+  color: var(--green-dk);
+  cursor: pointer;
+  font: 700 .72rem "DM Sans", sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: background .2s, border-color .2s;
+}
+.share-job-button:hover { background: var(--white); border-color: var(--green); }
+.share-job-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 3rem; align-items: start; }
 .job-description { padding: 2.5rem; background: var(--white); border: 1px solid var(--gray-4); }
 .job-description h2 { margin: 2.25rem 0 .9rem; font-size: 1.6rem; }
