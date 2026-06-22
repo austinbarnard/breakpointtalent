@@ -10,6 +10,27 @@ const dist = path.join(root, "dist");
 const siteUrl = (process.env.SITE_URL || "https://breakpointtalent.com").replace(/\/$/, "");
 const jobsApiUrl = process.env.JOBS_API_URL || "https://ace.breakpointtalent.com/api/public/jobs";
 
+const timeZoneByState = {
+  AL: "America/Chicago", AK: "America/Anchorage", AZ: "America/Phoenix",
+  AR: "America/Chicago", CA: "America/Los_Angeles", CO: "America/Denver",
+  CT: "America/New_York", DC: "America/New_York", DE: "America/New_York",
+  FL: "America/New_York", GA: "America/New_York", HI: "Pacific/Honolulu",
+  IA: "America/Chicago", ID: "America/Boise", IL: "America/Chicago",
+  IN: "America/Indiana/Indianapolis", KS: "America/Chicago", KY: "America/New_York",
+  LA: "America/Chicago", MA: "America/New_York", MD: "America/New_York",
+  ME: "America/New_York", MI: "America/Detroit", MN: "America/Chicago",
+  MO: "America/Chicago", MS: "America/Chicago", MT: "America/Denver",
+  NC: "America/New_York", ND: "America/Chicago", NE: "America/Chicago",
+  NH: "America/New_York", NJ: "America/New_York", NM: "America/Denver",
+  NV: "America/Los_Angeles", NY: "America/New_York", OH: "America/New_York",
+  OK: "America/Chicago", OR: "America/Los_Angeles", PA: "America/New_York",
+  RI: "America/New_York", SC: "America/New_York", SD: "America/Chicago",
+  TN: "America/Chicago", TX: "America/Chicago", UT: "America/Denver",
+  VA: "America/New_York", VT: "America/New_York", WA: "America/Los_Angeles",
+  WI: "America/Chicago", WV: "America/New_York", WY: "America/Denver",
+  PR: "America/Puerto_Rico", VI: "America/St_Thomas",
+};
+
 const staticEntries = [
   "index.html",
   "jobs.css",
@@ -143,6 +164,27 @@ function googleEmploymentType(value) {
     "per diem": "PER_DIEM",
   };
   return values[normalized] || (normalized ? "OTHER" : undefined);
+}
+
+function validThrough(job) {
+  const datePosted = String(job.datePosted || "").slice(0, 10);
+  const match = datePosted.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return undefined;
+
+  const expires = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  expires.setUTCDate(expires.getUTCDate() + 60);
+  const year = expires.getUTCFullYear();
+  const month = String(expires.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(expires.getUTCDate()).padStart(2, "0");
+  const timeZone = timeZoneByState[String(job.location?.state || "").toUpperCase()]
+    || "America/New_York";
+  const offsetPart = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    timeZoneName: "longOffset",
+  }).formatToParts(new Date(Date.UTC(year, expires.getUTCMonth(), expires.getUTCDate(), 12)))
+    .find((part) => part.type === "timeZoneName")?.value;
+  const offset = offsetPart?.replace("GMT", "") || "-05:00";
+  return `${year}-${month}-${day}T23:59:59${offset}`;
 }
 
 function salaryLabel(salary) {
@@ -280,6 +322,7 @@ function renderJobPage(job) {
     description: descriptionHtml,
     identifier: { "@type": "PropertyValue", name: "BreakPoint Talent", value: job.id },
     datePosted: job.datePosted.slice(0, 10),
+    validThrough: validThrough(job),
     directApply: true,
     hiringOrganization: {
       "@type": "Organization",
