@@ -105,6 +105,13 @@ function workplaceLabel(job) {
   return "On-site";
 }
 
+function hybridScheduleLabel(job) {
+  if (workplaceLabel(job) !== "Hybrid" || !job.hybridSchedule) return null;
+  return /\bdays?$/i.test(job.hybridSchedule)
+    ? `${job.hybridSchedule} in office`
+    : job.hybridSchedule;
+}
+
 function markdownHtml(value) {
   if (!value) return "";
   const rendered = marked.parse(value, { async: false, gfm: true, breaks: true });
@@ -218,9 +225,10 @@ function renderJobsIndex(jobs) {
     const location = locationLabel(job);
     const salary = salaryLabel(job.salary);
     const workplace = workplaceLabel(job);
+    const hybridSchedule = hybridScheduleLabel(job);
     const summary = jobSummary(job);
     const highlights = jobHighlights(job);
-    const search = [job.title, location, job.employmentType, workplace, salary, summary, ...highlights].filter(Boolean).join(" ").toLowerCase();
+    const search = [job.title, location, job.employmentType, workplace, hybridSchedule, salary, summary, ...highlights].filter(Boolean).join(" ").toLowerCase();
     return `<a class="job-card" href="/jobs/${escapeHtml(job.slug)}/" data-job-card data-search="${escapeHtml(search)}">
       <div class="job-card-main">
         <p class="card-eyebrow">Open opportunity</p>
@@ -228,6 +236,7 @@ function renderJobsIndex(jobs) {
         <div class="job-meta">
           <span class="meta-pill">${escapeHtml(location)}</span>
           <span class="meta-pill">${escapeHtml(workplace)}</span>
+          ${hybridSchedule ? `<span class="meta-pill">${escapeHtml(hybridSchedule)}</span>` : ""}
           ${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}
           ${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}
         </div>
@@ -258,6 +267,7 @@ function renderJobPage(job) {
   const location = locationLabel(job);
   const salary = salaryLabel(job.salary);
   const workplace = workplaceLabel(job);
+  const hybridSchedule = hybridScheduleLabel(job);
   const descriptionHtml = markdownHtml(job.description);
   const metaDescription = job.description
     ? `${plainText(job.description).slice(0, 135)}${plainText(job.description).length > 135 ? "…" : ""}`
@@ -306,7 +316,7 @@ function renderJobPage(job) {
   }
   return `${head({ title: `${job.title} in ${location} | BreakPoint Talent`, description: metaDescription, canonical, jsonLd })}
 <body>${nav()}
-<header class="page-hero detail-hero"><div class="hero-inner"><a class="breadcrumb" href="/jobs/">← All open roles</a><h1>${escapeHtml(job.title)}</h1><div class="detail-meta"><span class="meta-pill">${escapeHtml(location)}</span><span class="meta-pill">${escapeHtml(workplace)}</span>${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}</div><button class="share-job-button" id="share-job" type="button" aria-label="Share this job"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"></path></svg><span>Share this job</span></button></div></header>
+<header class="page-hero detail-hero"><div class="hero-inner"><a class="breadcrumb" href="/jobs/">← All open roles</a><h1>${escapeHtml(job.title)}</h1><div class="detail-meta"><span class="meta-pill">${escapeHtml(location)}</span><span class="meta-pill">${escapeHtml(workplace)}</span>${hybridSchedule ? `<span class="meta-pill">${escapeHtml(hybridSchedule)}</span>` : ""}${job.employmentType ? `<span class="meta-pill">${escapeHtml(job.employmentType)}</span>` : ""}${salary ? `<span class="meta-pill">${escapeHtml(salary)}</span>` : ""}</div><button class="share-job-button" id="share-job" type="button" aria-label="Share this job"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"></path></svg><span>Share this job</span></button></div></header>
 <main class="content-wrap detail-grid">
   <article class="job-description">
     ${descriptionHtml || `<h2>About this opportunity</h2><p>Contact BreakPoint Talent for full role details. This active search is not yet eligible for Google’s enhanced job results because its complete job description has not been added in Ace.</p>`}
