@@ -1,0 +1,13 @@
+{
+  "name": "breakpoint-talent-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-site.mjs"
+  },
+  "dependencies": {
+    "marked": "^18.0.0",
+    "sanitize-html": "^2.17.0"
+  }
+}
